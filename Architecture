@@ -1,0 +1,42 @@
+                Developer
+                    │
+                    │ Push Code
+                    ▼
+              GitHub Repository
+                    │
+                    │ Webhook / Poll SCM
+                    ▼
+                Jenkins Server
+           (CI/CD Pipeline Execution)
+                    │
+                    │ Pull Code
+                    │ Build / Prepare
+                    ▼
+         Deployment Decision Logic
+     (Detect Active Environment: Blue/Green)
+
+                    │
+                    │ Deploy New Version
+                    ▼
+
+        ┌───────────────────────────────┐
+        │        AWS Cloud              │
+        │                               │
+        │     Application Load Balancer │
+        │              │                │
+        │              │                │
+        │        Listener (HTTP/80)     │
+        │              │                │
+        │      ┌───────┴────────┐       │
+        │      │                │       │
+        │  Blue Target Group    Green Target Group
+        │      │                │
+        │      │                │
+        │  EC2 Instance        EC2 Instance
+        │  (Blue Server)       (Green Server)
+        │  Version 1           Version 2
+        │                               │
+        │                               │
+        └──────────────┬────────────────┘
+                       │
+                 User Traffic
